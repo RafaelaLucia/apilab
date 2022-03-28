@@ -1,37 +1,60 @@
 ﻿using labware_webapi.Contexts;
 using labware_webapi.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Task = labware_webapi.Domains.Task;
 
 namespace labware_webapi.Repositories
 {
     public class TaskRepository : ITaskRepository
     {
+
         LabWatchContext ctx = new();
-        public void Atualizar(int idTask, Domains.Task taskAtualizada)
+        public Task BuscarPorId(int id)
         {
-            throw new NotImplementedException();
+            return ctx.Tasks.FirstOrDefault(m => m.IdTask == id);
         }
 
-        public void Cadastrar(Domains.Task novaTask)
+
+        public void Atualizar(int idTask, Task taskAtualizada)
         {
-            throw new NotImplementedException();
+            Task taskBuscada = ctx.Tasks.Find(idTask);
+
+            if (taskAtualizada.TituloTask != null)
+            {
+                taskBuscada.IdProjeto = taskAtualizada.IdProjeto;
+                taskBuscada.IdTag = taskAtualizada.IdTag;
+                taskBuscada.IdStatusTask = taskAtualizada.IdStatusTask;
+                taskBuscada.IdUsuario = taskAtualizada.IdUsuario;
+                taskBuscada.TituloTask = taskAtualizada.TituloTask;
+                taskBuscada.Descricao = taskAtualizada.Descricao;
+                taskBuscada.TempoTrabalho = taskAtualizada.TempoTrabalho;
+                ctx.Tasks.Update(taskBuscada);
+                ctx.SaveChanges();
+            }
+        }
+
+        public void Cadastrar(Task novaTask)
+        {
+            ctx.Tasks.Add(novaTask);
+            ctx.SaveChanges();
         }
 
         public void Deletar(int idTask)
         {
-            //ctx.Tasks.Remove(BuscarPorId(idMedico));
+            ctx.Tasks.Remove(BuscarPorId(idTask));
             ctx.SaveChanges();
         }
 
-        public List<Domains.Task> ListarMinhas(int idUsuario)
+        public List<Task> ListarMinhas(int idUsuario)
         {
             throw new NotImplementedException();
         }
 
-        public List<Domains.Task> ListarTodos()
+        public List<Task> ListarTodos()
         {
             return ctx.Tasks.ToList();
         }

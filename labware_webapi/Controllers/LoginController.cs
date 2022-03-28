@@ -14,74 +14,57 @@ using System.Threading.Tasks;
 
 namespace labware_webapi.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/[controller]")]
-
-    [ApiController]
-    public class LoginController : ControllerBase
-    {
-
-        private IUsuarioRepository _usuarioRepository { get; set; }
-
-      public LoginController()
-       {
-         _usuarioRepository = new UsuarioRepository();
-       }
-
-
-       //private readonly IHttpContextAccessor _httpContextAccessor;
-       // public LoginController(IHttpContextAccessor httpContextAccessor)
-       // {
-       //     _httpContextAccessor = httpContextAccessor;
-       // }
-
-       //private readonly IUsuarioRepository _usuarioRepository;
-
-       // public LoginController(IUsuarioRepository repo)
-       //{
-       //      _usuarioRepository = repo;
-       // }
-
-        [HttpPost]
-        public IActionResult Login(LoginViewModel login)
+        [Produces("application/json")]
+        [Route("api/[controller]")]
+        [ApiController]
+        public class LoginController : ControllerBase
         {
-            try
+            private IUsuarioRepository _usuarioRepository { get; set; }
+
+            public LoginController()
             {
-                Usuario usuarioBuscado = _usuarioRepository.Login(login.Email, login.Senha);
+                _usuarioRepository = new UsuarioRepository();
+            }
 
-                if (usuarioBuscado == null)
+            [HttpPost]
+            public IActionResult Login(LoginViewModel login)
+            {
+                try
                 {
-                    return StatusCode(401, "E-mail ou senha inválidos!");
-                }
+                    Usuario usuarioBuscado = _usuarioRepository.Login(login.Email, login.Senha);
+                    if (usuarioBuscado == null)
+                    {
+                        return NotFound("E-mail ou senha inválidos!");
+                    }
 
-                var minhasClaims = new[]
-                {
+                    var MinhaClaim = new[]
+                    {
                     new Claim(JwtRegisteredClaimNames.Email, usuarioBuscado.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, usuarioBuscado.IdUsuario.ToString()),
                     new Claim(ClaimTypes.Role, usuarioBuscado.IdTipoUsuario.ToString()),
-                    new Claim("role", usuarioBuscado.IdTipoUsuario.ToString()),
+                    new Claim( "role", usuarioBuscado.IdTipoUsuario.ToString() )
                 };
+                    var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("DUoWyXzWbY-keyLabWare0193=1241"));
+                    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                    var meuToken = new JwtSecurityToken(
+                           issuer: "labware_webapi",
+                           audience: "labware_webapi",
+                           claims: MinhaClaim,
+                           expires: DateTime.Now.AddMinutes(30),
+                           signingCredentials: creds
+                       );
 
-                var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("DUoWyXzWbY-keyLabWare0193=1241"));
-                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-                var meuToken = new JwtSecurityToken(
-                        issuer: "labware_webapi",
-                        audience: "labware_webapi",
-                        claims: minhasClaims,
-                        expires: DateTime.Now.AddMinutes(30),
-                        signingCredentials: creds
-                    );
-
-                return Ok(new
+                    return Ok(
+                        new
+                        {
+                            tokenGerado = new JwtSecurityTokenHandler().WriteToken(meuToken)
+                        });
+                }
+                catch (Exception ex)
                 {
-                    token = new JwtSecurityTokenHandler().WriteToken(meuToken)
-                });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
+                    return BadRequest(ex);
+                }
             }
         }
     }
-}
+

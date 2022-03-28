@@ -5,6 +5,7 @@ using labware_webapi.Utils;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,15 +13,39 @@ namespace labware_webapi.Repositories
 {
     public class UsuarioRepository : IUsuarioRepository
     {
-        LabWatchContext ctx = new();
+        LabWatchContext ctx = new LabWatchContext();
+
         public string AtualizarFotoDir(int id_usuario)
         {
-            throw new NotImplementedException();
+            string nome_arquivo = id_usuario.ToString() + ".png";
+
+            string caminho = Path.Combine("perfil", nome_arquivo);
+
+            if (File.Exists(caminho))
+            {
+                byte[] bytes_arquivo = File.ReadAllBytes(caminho);
+                return Convert.ToBase64String(bytes_arquivo);
+            }
+
+            return null;
         }
 
         public void AtualizarPeloId(int idUsuario, Usuario usuarioAtualizado)
         {
-            throw new NotImplementedException();
+            Usuario usuarioBuscado = ctx.Usuarios.Find(idUsuario);
+
+            if (usuarioAtualizado.NomeUsuario != null)
+            {
+                usuarioBuscado.IdTipoUsuario = usuarioAtualizado.IdTipoUsuario;
+                usuarioBuscado.IdStatus = usuarioAtualizado.IdStatus;
+                usuarioBuscado.NomeUsuario = usuarioAtualizado.NomeUsuario;
+                usuarioBuscado.SobreNome = usuarioAtualizado.SobreNome;
+                usuarioBuscado.CargaHoraria = usuarioAtualizado.CargaHoraria;
+                usuarioBuscado.HorasTrabalhadas = usuarioAtualizado.HorasTrabalhadas;
+                usuarioBuscado.Email = usuarioAtualizado.Email;
+                ctx.Usuarios.Update(usuarioBuscado);
+                ctx.SaveChanges();
+            }
         }
 
         public Usuario Buscar(int idUsuario)
@@ -48,24 +73,40 @@ namespace labware_webapi.Repositories
         public Usuario Login(string email, string senha)
         {
 
-            //return ctx.Usuarios.FirstOrDefault(u => u.Email == email && u.Senha == senha);
-
             var usuario = ctx.Usuarios.FirstOrDefault(u => u.Email == email);
+
+            if (usuario.Senha[0] != '$' && usuario.Senha.Length < 32)
+            {
+                usuario.Senha = Criptografia.GerarHash(usuario.Senha);
+                ctx.SaveChanges();
+            }
 
             if (usuario != null)
             {
                 bool confere = Criptografia.Comparar(senha, usuario.Senha);
-                if (confere)
-                    return usuario;
+                if (confere) return usuario;
             }
-
 
             return null;
         }
 
-        public void SalvarFotoDir(IFormFile foto, int id_usuario)
+            public void SalvarFotoDir(IFormFile foto, int id_usuario)
         {
-            throw new NotImplementedException();
+            string nome_arquivo = id_usuario.ToString() + "jpg files(.*jpg)| *.jpg | PNG files(.*png) | *.png | All Files(*.*) | *.* ";
+
+            using (var stream = new FileStream(Path.Combine("perfil", nome_arquivo), FileMode.Create))
+            {
+                foto.CopyTo(stream);
+            }
         }
-    }
+
+  }
+
+
+
+
+
+
+
+
 }

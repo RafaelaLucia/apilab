@@ -13,5 +13,6 @@ namespace labware_webapi.Interfaces
         void Cadastrar(Task novaTask);
         void Deletar(int idTask);
         void Atualizar(int idTask, Task taskAtualizada);
+        Task BuscarPorId(int id);
     }
 }

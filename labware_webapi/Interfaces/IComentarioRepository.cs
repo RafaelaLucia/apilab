@@ -11,5 +11,6 @@ namespace labware_webapi.Interfaces
         List<Comentario> ListarTodos();
         void Cadastrar(Comentario novoComentario);
         void Deletar(int idComentario);
+        Comentario BuscarPorId(int idComentario);
     }
 }
