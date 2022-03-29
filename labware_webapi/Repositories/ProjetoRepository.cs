@@ -48,7 +48,8 @@ namespace labware_webapi.Repositories
 
         public List<Projeto> ListarTodos()
         {
-            return ctx.Projetos.ToList();
+            return ctx.Projetos
+                .ToList();
         }
     }
 }

@@ -116,6 +116,10 @@ namespace labware_webapi.Contexts
                     .HasColumnType("datetime")
                     .HasColumnName("dataInicio");
 
+                entity.Property(e => e.nomeCliente)
+                   .HasColumnType("string")
+                   .HasColumnName("nomeCiente");
+
                 entity.Property(e => e.IdEquipe).HasColumnName("idEquipe");
 
                 entity.Property(e => e.IdStatusProjeto).HasColumnName("idStatusProjeto");
