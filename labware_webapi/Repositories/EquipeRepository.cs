@@ -1,6 +1,7 @@
 ﻿using labware_webapi.Contexts;
 using labware_webapi.Domains;
 using labware_webapi.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,7 +46,16 @@ namespace labware_webapi.Repositories
 
         public List<Equipe> ListarTodos()
         {
-            return ctx.Equipes.ToList();
+            return ctx.Equipes.Include(x => x.IdUsuarioNavigation).Select(x => new Equipe() {
+                NomeEquipe = x.NomeEquipe,
+                HorasTrabalhadas = x.HorasTrabalhadas,
+
+                IdUsuarioNavigation = new Usuario()
+                {
+                    NomeUsuario = x.IdUsuarioNavigation.NomeUsuario
+                }
+            }).ToList();
+
         }
     }
 }

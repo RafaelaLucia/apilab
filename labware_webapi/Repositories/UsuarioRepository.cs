@@ -3,6 +3,7 @@ using labware_webapi.Domains;
 using labware_webapi.Interfaces;
 using labware_webapi.Utils;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -67,7 +68,7 @@ namespace labware_webapi.Repositories
 
         public List<Usuario> ListarTodos()
         {
-            return ctx.Usuarios.ToList();
+            return ctx.Usuarios.Include(x => x.IdTipoUsuarioNavigation).ToList();
         }
 
         public Usuario Login(string email, string senha)
