@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace labware_webapi.Controllers
 {
+
     [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
@@ -117,7 +118,7 @@ namespace labware_webapi.Controllers
                 string extensao = arquivo.FileName.Split('.').Last();
 
                 if (extensao != "png")
-                    return BadRequest(new { mensagem = "Apenas arquivos .png e .jpg são permitidos." });
+                    return BadRequest(new { mensagem = "Apenas arquivos .png são permitidos." });
 
 
                 int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);

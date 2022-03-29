@@ -19,14 +19,14 @@ namespace labware_webapi.Controllers
         [ApiController]
         public class LoginController : ControllerBase
         {
-            private IUsuarioRepository _usuarioRepository { get; set; }
+        private readonly IUsuarioRepository _usuarioRepository;
 
-            public LoginController()
-            {
-                _usuarioRepository = new UsuarioRepository();
-            }
+        public LoginController(IUsuarioRepository contexto)
+        {
+            _usuarioRepository = contexto;
+        }
 
-            [HttpPost]
+        [HttpPost]
             public IActionResult Login(LoginViewModel login)
             {
                 try

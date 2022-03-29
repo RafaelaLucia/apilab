@@ -3,6 +3,7 @@ using labware_webapi.Domains;
 using labware_webapi.Interfaces;
 using labware_webapi.Utils;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -90,9 +91,9 @@ namespace labware_webapi.Repositories
             return null;
         }
 
-            public void SalvarFotoDir(IFormFile foto, int id_usuario)
+        public void SalvarFotoDir(IFormFile foto, int id_usuario)
         {
-            string nome_arquivo = id_usuario.ToString() + "jpg files(.*jpg)| *.jpg | PNG files(.*png) | *.png | All Files(*.*) | *.* ";
+            string nome_arquivo = id_usuario.ToString() + ".png ";
 
             using (var stream = new FileStream(Path.Combine("perfil", nome_arquivo), FileMode.Create))
             {
@@ -100,13 +101,7 @@ namespace labware_webapi.Repositories
             }
         }
 
-  }
-
-
-
-
-
-
-
+    }
 
 }
+
