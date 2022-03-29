@@ -14,16 +14,16 @@ using System.Threading.Tasks;
 
 namespace labware_webapi.Controllers
 {
-        [Produces("application/json")]
-        [Route("api/[controller]")]
-        [ApiController]
-        public class LoginController : ControllerBase
-        {
-        private readonly IUsuarioRepository _usuarioRepository;
+    [Produces("application/json")]
+    [Route("api/[controller]")]
+    [ApiController]
+    public class LoginController : ControllerBase
+    {
+        private IUsuarioRepository _usuarioRepository { get; set; }
 
-        public LoginController(IUsuarioRepository contexto)
+        public LoginController()
         {
-            _usuarioRepository = contexto;
+            _usuarioRepository = new UsuarioRepository();
         }
 
         [HttpPost]
