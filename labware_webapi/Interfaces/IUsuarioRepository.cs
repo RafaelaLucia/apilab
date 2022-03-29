@@ -16,6 +16,6 @@ namespace labware_webapi.Interfaces
         Usuario Buscar(int idUsuario);
         void Cadastrar(Usuario novoUsuario);
         void Deletar(int idUsuario);
-        void AtualizarPeloId(int idUsuario, Usuario usuarioAtualizado); 
+        void AtualizarPeloId(int idUsuario, Usuario usuarioAtualizado);
     }
-}
+    }

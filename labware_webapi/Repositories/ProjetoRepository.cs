@@ -57,6 +57,12 @@ namespace labware_webapi.Repositories
                     TituloProjeto = x.TituloProjeto,
                     DataInicio = x.DataInicio,
                     DataConclusao = x.DataConclusao,
+                    NomeCliente = x.NomeCliente,
+
+                    IdStatusProjetoNavigation = new StatusProjeto()
+                    {
+                        StatusProjeto1 = x.IdStatusProjetoNavigation.StatusProjeto1
+                    },
 
                     IdEquipeNavigation = new Equipe()
                     {
