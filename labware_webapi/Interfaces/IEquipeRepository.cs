@@ -13,5 +13,6 @@ namespace labware_webapi.Interfaces
         void Cadastrar(Equipe novaEquipe);
         void Deletar(int idEquipe);
         void AtualizarPeloId(int idEquipe, Equipe EquipeAtualizada);
+       public void AdicionarPessoasEquipe(int idEquipe, int idUsuario);
     }
 }

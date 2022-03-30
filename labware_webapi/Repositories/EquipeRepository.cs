@@ -1,6 +1,7 @@
 ﻿using labware_webapi.Contexts;
 using labware_webapi.Domains;
 using labware_webapi.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +38,25 @@ namespace labware_webapi.Repositories
             ctx.SaveChanges();
         }
 
+        public void AdicionarPessoasEquipe(int idEquipe, int idUsuario)
+        {
+            
+           //var array = [];
+            var validar= ctx.Usuarios.FirstOrDefault(i => i.IdUsuario == idUsuario);
+          //  List<Usuario> Usuarios;
+            Equipe equipe = ctx.Equipes.Find(idEquipe);
+          //  Usuario usuario = ctx.Usuarios.Find(idUsuario);
+
+            if (equipe != null)
+            {
+                if(validar != null)
+                {
+                  ctx.Equipes.ToList();
+                }   
+                
+            }
+    }
+
         public void Deletar(int idEquipe)
         {
             ctx.Equipes.Remove(Buscar(idEquipe));
@@ -45,7 +65,8 @@ namespace labware_webapi.Repositories
 
         public List<Equipe> ListarTodos()
         {
-            return ctx.Equipes.ToList();
+
+            return ctx.Equipes.Include(c => c.IdUsuarioNavigation).ToList();
         }
     }
 }
