@@ -10,7 +10,6 @@ namespace labware_webapi.Domains
         public Usuario()
         {
             Comentarios = new HashSet<Comentario>();
-            Equipes = new HashSet<Equipe>();
             Tasks = new HashSet<Task>();
         }
 
@@ -24,11 +23,12 @@ namespace labware_webapi.Domains
         public string Email { get; set; }
         public string Senha { get; set; }
         public string FotoUsuario { get; set; }
+        public int? IdEquipe { get; set; }
 
         public virtual StatusUsuario IdStatusNavigation { get; set; }
         public virtual TipoUsuario IdTipoUsuarioNavigation { get; set; }
+        public virtual Equipe IdEquipeNavigation { get; set; }
         public virtual ICollection<Comentario> Comentarios { get; set; }
-        public virtual ICollection<Equipe> Equipes { get; set; }
         public virtual ICollection<Task> Tasks { get; set; }
     }
 }

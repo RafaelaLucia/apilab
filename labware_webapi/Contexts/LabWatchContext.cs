@@ -85,18 +85,11 @@ namespace labware_webapi.Contexts
                     .HasColumnType("decimal(18, 0)")
                     .HasColumnName("horasTrabalhadas");
 
-                entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
-
                 entity.Property(e => e.NomeEquipe)
                     .IsRequired()
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("nomeEquipe");
-
-                entity.HasOne(d => d.IdUsuarioNavigation)
-                    .WithMany(p => p.Equipes)
-                    .HasForeignKey(d => d.IdUsuario)
-                    .HasConstraintName("FK__Equipe__idUsuari__3E52440B");
             });
 
             modelBuilder.Entity<Projeto>(entity =>
@@ -118,7 +111,7 @@ namespace labware_webapi.Contexts
 
                 entity.Property(e => e.nomeCliente)
                    .HasColumnType("string")
-                   .HasColumnName("nomeCiente");
+                   .HasColumnName("nomeCliente");
 
                 entity.Property(e => e.IdEquipe).HasColumnName("idEquipe");
 
@@ -306,6 +299,7 @@ namespace labware_webapi.Contexts
                 entity.Property(e => e.IdStatus).HasColumnName("idStatus");
 
                 entity.Property(e => e.IdTipoUsuario).HasColumnName("idTipoUsuario");
+                entity.Property(e => e.IdEquipe).HasColumnName("idEquipe");
 
                 entity.Property(e => e.NomeUsuario)
                     .IsRequired()
@@ -334,6 +328,11 @@ namespace labware_webapi.Contexts
                     .WithMany(p => p.Usuarios)
                     .HasForeignKey(d => d.IdTipoUsuario)
                     .HasConstraintName("FK__Usuario__idTipoU__3A81B327");
+
+                entity.HasOne(d => d.IdEquipeNavigation)
+                 .WithMany(p => p.Usuarios)
+                 .HasForeignKey(d => d.IdEquipe)
+                 .HasConstraintName("FK__Usuario__idEquip__18EBB532");
             });
 
             OnModelCreatingPartial(modelBuilder);

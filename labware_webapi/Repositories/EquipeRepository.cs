@@ -19,7 +19,6 @@ namespace labware_webapi.Repositories
 
             if (EquipeAtualizada.NomeEquipe != null)
             {
-                equipeBscada.IdUsuario = EquipeAtualizada.IdUsuario;
                 equipeBscada.NomeEquipe = EquipeAtualizada.NomeEquipe;
                 equipeBscada.HorasTrabalhadas = EquipeAtualizada.HorasTrabalhadas;
                 ctx.Equipes.Update(equipeBscada);
@@ -66,7 +65,7 @@ namespace labware_webapi.Repositories
         public List<Equipe> ListarTodos()
         {
 
-            return ctx.Equipes.Include(c => c.IdUsuarioNavigation).ToList();
+            return ctx.Equipes.ToList();
         }
     }
 }
