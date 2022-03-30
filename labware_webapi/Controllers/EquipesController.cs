@@ -104,24 +104,5 @@ namespace labware_webapi.Controllers
 
         }
 
-        [HttpPost("{idUsuario}")]
-        public IActionResult AdicionarPessoa(int idEquipe, int idUsuario, Equipe equipe)
-        {
-            try
-            { 
-                if (equipe == null)
-                {
-                    return BadRequest("Não foi possível Adicionar");
-                };
-
-                _repository.AdicionarPessoasEquipe(idEquipe, idUsuario);
-                return StatusCode(200);
-            }
-            catch (Exception error)
-            {
-                return BadRequest(error.Message);
-            }
-        }
-
     }
 }

@@ -37,25 +37,7 @@ namespace labware_webapi.Repositories
             ctx.SaveChanges();
         }
 
-        public void AdicionarPessoasEquipe(int idEquipe, int idUsuario)
-        {
-            
-           //var array = [];
-            var validar= ctx.Usuarios.FirstOrDefault(i => i.IdUsuario == idUsuario);
-          //  List<Usuario> Usuarios;
-            Equipe equipe = ctx.Equipes.Find(idEquipe);
-          //  Usuario usuario = ctx.Usuarios.Find(idUsuario);
-
-            if (equipe != null)
-            {
-                if(validar != null)
-                {
-                  ctx.Equipes.ToList();
-                }   
-                
-            }
-    }
-
+    
         public void Deletar(int idEquipe)
         {
             ctx.Equipes.Remove(Buscar(idEquipe));
