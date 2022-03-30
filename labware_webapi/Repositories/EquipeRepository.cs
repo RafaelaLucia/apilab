@@ -52,6 +52,7 @@ namespace labware_webapi.Repositories
 
                 IdUsuarioNavigation = new Usuario()
                 {
+                    IdUsuario = x.IdUsuarioNavigation.IdUsuario,
                     NomeUsuario = x.IdUsuarioNavigation.NomeUsuario,
                     Email = x.IdUsuarioNavigation.Email,
 

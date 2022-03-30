@@ -13,7 +13,6 @@ namespace labware_webapi.Repositories
     {
         LabWatchContext ctx = new LabWatchContext();
 
-
         public void Atualizar(int idProjeto, Projeto projetoAtualizado)
         {
             Projeto projBuscado = ctx.Projetos.Find(idProjeto);
@@ -58,6 +57,8 @@ namespace labware_webapi.Repositories
                     DataInicio = x.DataInicio,
                     DataConclusao = x.DataConclusao,
                     NomeCliente = x.NomeCliente,
+                    Descricao = x.Descricao,
+                    FotoCliente = x.FotoCliente,
 
                     IdStatusProjetoNavigation = new StatusProjeto()
                     {
@@ -68,7 +69,6 @@ namespace labware_webapi.Repositories
                     {
                         IdUsuarioNavigation = new Usuario()
                         {
-
                             NomeUsuario = x.IdEquipeNavigation.IdUsuarioNavigation.NomeUsuario
                         }
                     }

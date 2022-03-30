@@ -20,7 +20,7 @@ namespace labware_webapi.Domains
         public DateTime? DataConclusao { get; set; }
         public string NomeCliente { get; set; }
         public string FotoCliente { get; set; }
-
+        public string Descricao { get; set; }
         public virtual Equipe IdEquipeNavigation { get; set; }
         public virtual StatusProjeto IdStatusProjetoNavigation { get; set; }
         public virtual ICollection<Task> Tasks { get; set; }
