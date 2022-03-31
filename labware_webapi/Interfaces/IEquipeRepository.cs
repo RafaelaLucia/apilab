@@ -8,6 +8,7 @@ namespace labware_webapi.Interfaces
 {
     interface IEquipeRepository
     {
+        
         List<Equipe> ListarTodos();
         Equipe Buscar(int idEquipe);
         void Cadastrar(Equipe novaEquipe);
