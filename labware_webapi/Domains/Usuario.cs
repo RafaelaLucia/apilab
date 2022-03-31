@@ -29,6 +29,6 @@ namespace labware_webapi.Domains
         public virtual TipoUsuario IdTipoUsuarioNavigation { get; set; }
         public virtual Equipe IdEquipeNavigation { get; set; }
         public virtual ICollection<Comentario> Comentarios { get; set; }
-        public virtual ICollection<Task> Tasks { get; set; }
+               public virtual ICollection<Task> Tasks { get; set; }
     }
 }

@@ -12,7 +12,6 @@ namespace labware_webapi.Repositories
     public class EquipeRepository : IEquipeRepository
     {
         LabWatchContext ctx = new LabWatchContext();
-
         public void AtualizarPeloId(int idEquipe, Equipe EquipeAtualizada)
         {
             Equipe equipeBscada = ctx.Equipes.Find(idEquipe);
@@ -45,8 +44,9 @@ namespace labware_webapi.Repositories
         }
 
         public List<Equipe> ListarTodos()
-        {
-            return ctx.Equipes.ToList();
+        {                 
+           return ctx.Equipes.Include(p => p.Usuarios ).ToList();
+           
         }
     }
 }
