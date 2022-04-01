@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="clientefoto\" />
     <Folder Include="Perfil\" />
   </ItemGroup>
 

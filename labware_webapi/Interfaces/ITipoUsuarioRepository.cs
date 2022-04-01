@@ -10,6 +10,7 @@ namespace labware_webapi.Interfaces
     {
         List<TipoUsuario> ListarTodos();
         TipoUsuario BuscarPorId(int idTipoUsuario);
+        void Cadastrar(TipoUsuario novoTipo);
 
     }
 }

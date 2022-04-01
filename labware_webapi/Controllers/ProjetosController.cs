@@ -103,5 +103,57 @@ namespace labware_webapi.Controllers
             }
 
         }
+
+
+
+
+        [HttpPost("{idProjeto}")]
+        public IActionResult Postar(IFormFile arquivo, int idProjeto)
+        {
+            try
+            {
+                if (arquivo == null)
+                    return BadRequest(new { mensagem = "Nenhum arquivo selecionado" });
+
+                if (arquivo.Length > 500000)
+                    return BadRequest(new { mensagem = "O tamanho máximo da imagem foi atingido." });
+
+                string extensao = arquivo.FileName.Split('.').Last();
+
+                if (extensao != "png")
+                    return BadRequest(new { mensagem = "Apenas arquivos .png são permitidos." });
+
+
+                // int idProjeto = Convert.ToInt32(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
+
+                _repository.SalvarFoto(arquivo, idProjeto);
+
+                return Ok();
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+            [HttpGet("imagem/{idProjeto}")]
+            public IActionResult getDIR(int id)
+            {
+                try
+                {
+                string base64 = _repository.AtualizarFoto(id);
+                return Ok(base64);
+
+                }
+                catch (Exception ex)
+                {
+                return BadRequest(ex.Message);
+                }
+            }
+
+        
+
     }
 }
