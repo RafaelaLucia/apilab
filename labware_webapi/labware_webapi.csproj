@@ -20,8 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="clientefoto\" />
     <Folder Include="Perfil\" />
+    <Folder Include="StaticFiles\Images\" />
   </ItemGroup>
 
   <ItemGroup>

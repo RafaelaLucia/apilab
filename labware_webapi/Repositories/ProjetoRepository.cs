@@ -33,18 +33,7 @@ namespace labware_webapi.Repositories
             }
         }
 
-        public string AtualizarFoto(int id_projeto)
-        {
-            string nome_arquivo = id_projeto.ToString() + ".png";
-            string caminho = Path.Combine("clientefoto", nome_arquivo);
-
-            if (File.Exists(caminho))
-            {
-                byte[] bytes_arquivo = File.ReadAllBytes(caminho);
-                return Convert.ToBase64String(bytes_arquivo);
-            }
-            return null;
-        }
+      
 
         public Projeto Buscar(int idProjeto)
         {
@@ -69,14 +58,7 @@ namespace labware_webapi.Repositories
                 .ToList();
         }
 
-        public void SalvarFoto(IFormFile foto, int id_projeto)
-        {
-            string nome_arquivo = id_projeto.ToString() + ".png ";
-
-            using (var stream = new FileStream(Path.Combine("clientefoto", nome_arquivo), FileMode.Create))
-            {
-                foto.CopyTo(stream);
-            }
-        }
+      
+        
     }
 }

@@ -1,8 +1,10 @@
-﻿using labware_webapi.Domains;
+﻿using labware_webapi.Contexts;
+using labware_webapi.Domains;
 using labware_webapi.Interfaces;
 using labware_webapi.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Patrimonio.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,7 +55,7 @@ namespace labware_webapi.Controllers
 
 
 
-        [HttpPost]
+       /* [HttpPost]
         public IActionResult Cadastrar(Projeto projeto)
         {
             try
@@ -70,7 +72,7 @@ namespace labware_webapi.Controllers
             {
                 return BadRequest(error.Message);
             }
-        }
+        }*/
 
 
 
@@ -103,57 +105,6 @@ namespace labware_webapi.Controllers
             }
 
         }
-
-
-
-
-        [HttpPost("{idProjeto}")]
-        public IActionResult Postar(IFormFile arquivo, int idProjeto)
-        {
-            try
-            {
-                if (arquivo == null)
-                    return BadRequest(new { mensagem = "Nenhum arquivo selecionado" });
-
-                if (arquivo.Length > 500000)
-                    return BadRequest(new { mensagem = "O tamanho máximo da imagem foi atingido." });
-
-                string extensao = arquivo.FileName.Split('.').Last();
-
-                if (extensao != "png")
-                    return BadRequest(new { mensagem = "Apenas arquivos .png são permitidos." });
-
-
-                // int idProjeto = Convert.ToInt32(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
-
-                _repository.SalvarFoto(arquivo, idProjeto);
-
-                return Ok();
-
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-
-            [HttpGet("imagem/{idProjeto}")]
-            public IActionResult getDIR(int id)
-            {
-                try
-                {
-                string base64 = _repository.AtualizarFoto(id);
-                return Ok(base64);
-
-                }
-                catch (Exception ex)
-                {
-                return BadRequest(ex.Message);
-                }
-            }
-
-        
 
     }
 }

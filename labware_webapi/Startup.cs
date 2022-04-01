@@ -1,7 +1,13 @@
+using labware_webapi.Contexts;
+using labware_webapi.Interfaces;
+using labware_webapi.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -17,7 +23,14 @@ namespace labware_webapi
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
+
+        public Startup(IConfiguration _configuration)
+        {
+            Configuration = _configuration;
+        }
+
+        public IConfiguration Configuration { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services
@@ -69,7 +82,16 @@ namespace labware_webapi
             services.AddHttpContextAccessor();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-    }
+
+            services.AddDbContext<LabWatchContext>(options =>
+                            options.UseSqlServer(Configuration.GetConnectionString("Default"))
+                        );
+
+            services.AddTransient<DbContext, LabWatchContext>();
+            services.AddTransient<IUsuarioRepository, UsuarioRepository>();
+            services.AddTransient<IProjetoRepository, ProjetoRepository>();
+
+        }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -84,6 +106,13 @@ namespace labware_webapi
             app.UseCors("CorPolicy");
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                       Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles")),
+                RequestPath = "/StaticFiles"
+            });
 
 
             app.UseSwaggerUI(c => {

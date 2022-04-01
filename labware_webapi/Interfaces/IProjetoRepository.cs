@@ -10,8 +10,6 @@ namespace labware_webapi.Interfaces
     interface IProjetoRepository
     {
         List<Projeto> ListarTodos();
-        void SalvarFoto(IFormFile foto, int id_projeto);
-        string AtualizarFoto(int id_projeto);
         Projeto Buscar(int idProjeto);
         void Cadastrar(Projeto novoProjeto);
         void Deletar(int idProjeto);
