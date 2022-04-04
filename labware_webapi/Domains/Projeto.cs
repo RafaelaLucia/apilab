@@ -21,6 +21,8 @@ namespace labware_webapi.Domains
         public string nomeCliente { get; set; }
         public string fotoCliente { get; set; }
 
+        public string descricao { get; set; }
+
         public virtual Equipe IdEquipeNavigation { get; set; }
         public virtual StatusProjeto IdStatusProjetoNavigation { get; set; }
         public virtual ICollection<Task> Tasks { get; set; }

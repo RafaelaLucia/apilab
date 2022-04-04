@@ -74,23 +74,6 @@ namespace labware_webapi.Controllers
             }
         }*/
 
-
-
-        [HttpPut("{idProjeto}")]
-        public IActionResult Atualizar(int id, Projeto projeto)
-        {
-            try
-            {
-                _repository.Atualizar(id, projeto);
-                return StatusCode(204);
-            }
-            catch (Exception error)
-            {
-                return BadRequest(error.Message);
-            }
-        }
-
-
         [HttpDelete("{idTask}")]
         public IActionResult Deletar(int id)
         {

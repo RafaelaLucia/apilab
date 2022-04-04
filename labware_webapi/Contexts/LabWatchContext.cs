@@ -123,6 +123,10 @@ namespace labware_webapi.Contexts
                     .IsUnicode(false)
                     .HasColumnName("tituloProjeto");
 
+                entity.Property(e => e.descricao)
+                   .HasColumnType("string")
+                   .HasColumnName("descricao");
+
                 entity.HasOne(d => d.IdEquipeNavigation)
                     .WithMany(p => p.Projetos)
                     .HasForeignKey(d => d.IdEquipe)
