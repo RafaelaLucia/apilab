@@ -14,7 +14,8 @@ namespace labware_webapi.Interfaces
         void Cadastrar(Projeto novoProjeto);
         void Deletar(int idProjeto);
         void Atualizar(Projeto projetoAtualizado, int idProjeto);
+        void AtualizarFoto(Projeto projetoAtualizado, int idProjeto);
 
-
+        public List<Projeto> VerMinhas(int idEquipe);
     }
 }

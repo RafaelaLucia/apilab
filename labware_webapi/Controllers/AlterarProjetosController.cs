@@ -25,7 +25,7 @@ namespace labware_webapi.Controllers
         }
 
         [HttpPut("{idProjeto}")]
-        public async Task<IActionResult> PutEquipamento(int idProjeto, Projeto projeto, [FromForm] Projeto projetoAtualizado, IFormFile arquivo)
+        public async Task<IActionResult> PutEquipamento(int idProjeto, [FromForm] Projeto projetoAtualizado, IFormFile arquivo)
         {
 
             #region Upload da Imagem com extensões permitidas apenas
@@ -44,15 +44,13 @@ namespace labware_webapi.Controllers
 
             projetoAtualizado.fotoCliente = uploadResultado;
             #endregion
-
-            projetoAtualizado = projeto;
-
-            if (idProjeto != projeto.IdProjeto)
+                    
+            if (idProjeto != projetoAtualizado.IdProjeto)
             {
                 return BadRequest();
             }
 
-            _context.Entry(projeto).State = EntityState.Modified;
+            _context.Entry(projetoAtualizado).State = EntityState.Modified;
 
             try
             {
@@ -72,6 +70,49 @@ namespace labware_webapi.Controllers
 
             return NoContent();
         }
+
+
+
+
+
+
+
+
+
+
+
+/*
+        [HttpPut]
+        public async Task<ActionResult<Projeto>> PutEquipamento([FromForm] Projeto projeto, IFormFile arquivo)
+        {
+
+            #region Upload da Imagem com extensões permitidas apenas
+            string[] extensoesPermitidas = { "jpg", "png", "jpeg", "gif" };
+            string uploadResultado = Upload.UploadFile(arquivo, extensoesPermitidas);
+
+            if (uploadResultado == "")
+            {
+                return BadRequest("Arquivo não encontrado");
+            }
+
+            if (uploadResultado == "Extensão não permitida")
+            {
+                return BadRequest("Extensão de arquivo não permitida");
+            }
+
+            projeto.fotoCliente = uploadResultado;
+            #endregion
+
+            _context.Projetos.AtualizarFoto(projeto);
+            await _context.SaveChangesAsync();
+
+            _context.AtualizarFoto(projeto);
+            return StatusCode(204);
+
+            return Created("Projeto", projeto);
+
+
+        }*/
 
         private bool ProjetoExists(int id)
         {

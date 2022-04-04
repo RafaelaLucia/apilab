@@ -123,7 +123,7 @@ namespace labware_webapi.Contexts
                     .IsUnicode(false)
                     .HasColumnName("tituloProjeto");
 
-                entity.Property(e => e.descricao)
+                entity.Property(e => e.Descricao)
                    .HasColumnType("string")
                    .HasColumnName("descricao");
 

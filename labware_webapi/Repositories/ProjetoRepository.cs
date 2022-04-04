@@ -30,9 +30,22 @@ namespace labware_webapi.Repositories
                 projBuscado.nomeCliente = projetoAtualizado.nomeCliente;
                 projBuscado.fotoCliente = projetoAtualizado.fotoCliente;
                 ctx.Projetos.Update(projBuscado);
+                ctx.SaveChangesAsync();
+            }
+        }
+
+        public void AtualizarFoto(Projeto projetoAtualizado, int idProjeto)
+        {
+            Projeto projBuscado = ctx.Projetos.Find(idProjeto);
+
+            if (projetoAtualizado.TituloProjeto != null)
+            {
+               projBuscado.fotoCliente = projetoAtualizado.fotoCliente;
+                ctx.Projetos.Update(projBuscado);
                 ctx.SaveChanges();
             }
         }
+
 
         public Projeto Buscar(int idProjeto)
         {
@@ -56,8 +69,31 @@ namespace labware_webapi.Repositories
             return ctx.Projetos
                 .ToList();
         }
+              
+        public List<Projeto> VerMinhas(int idEquipe)
+        {
+            return ctx.Projetos
+                .Select(c => new Projeto()
+                {
+                    IdProjeto = c.IdProjeto,
+                    IdStatusProjeto = c.IdStatusProjeto,
+                    TituloProjeto = c.TituloProjeto,
+                    DataInicio = c.DataInicio,
+                    DataConclusao = c.DataConclusao,
+                    nomeCliente = c.nomeCliente,
+                    fotoCliente = c.nomeCliente,
+                    Descricao = c.Descricao,
+                    IdEquipeNavigation = new Equipe()
+                    {
+                        IdEquipe = c.IdEquipeNavigation.IdEquipe,
+                        NomeEquipe = c.IdEquipeNavigation.NomeEquipe,
+                        HorasTrabalhadas = c.IdEquipeNavigation.HorasTrabalhadas
 
-      
-        
+                    }
+                })
+                .Where(p => p.IdEquipeNavigation.IdEquipe == idEquipe ).ToList();
+        }
+
+
     }
 }
