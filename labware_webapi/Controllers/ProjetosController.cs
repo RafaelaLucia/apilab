@@ -55,24 +55,40 @@ namespace labware_webapi.Controllers
 
 
 
-       /* [HttpPost]
-        public IActionResult Cadastrar(Projeto projeto)
+        /* [HttpPost]
+         public IActionResult Cadastrar(Projeto projeto)
+         {
+             try
+             {
+                 if (projeto == null)
+                 {
+                     return BadRequest("Não foi possível cadastrar");
+                 };
+
+                 _repository.Cadastrar(projeto);
+                 return StatusCode(201);
+             }
+             catch (Exception error)
+             {
+                 return BadRequest(error.Message);
+             }
+         }*/
+
+
+
+        [HttpPut("{idProjeto}")]
+        public IActionResult Atualizar(int idProjeto, Projeto projeto)
         {
             try
             {
-                if (projeto == null)
-                {
-                    return BadRequest("Não foi possível cadastrar");
-                };
-
-                _repository.Cadastrar(projeto);
-                return StatusCode(201);
+                _repository.Atualizar(projeto, idProjeto);
+                return StatusCode(204);
             }
             catch (Exception error)
             {
                 return BadRequest(error.Message);
             }
-        }*/
+        }
 
         [HttpDelete("{idTask}")]
         public IActionResult Deletar(int id)

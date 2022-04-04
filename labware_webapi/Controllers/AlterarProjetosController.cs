@@ -24,8 +24,8 @@ namespace labware_webapi.Controllers
             _context = context;
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutEquipamento(int id, [FromForm] Projeto projetoAtualizado, IFormFile arquivo)
+        [HttpPut("{idProjeto}")]
+        public async Task<IActionResult> PutEquipamento(int idProjeto, Projeto projeto, [FromForm] Projeto projetoAtualizado, IFormFile arquivo)
         {
 
             #region Upload da Imagem com extensões permitidas apenas
@@ -45,13 +45,14 @@ namespace labware_webapi.Controllers
             projetoAtualizado.fotoCliente = uploadResultado;
             #endregion
 
+            projetoAtualizado = projeto;
 
-            if (id != projetoAtualizado.IdProjeto)
+            if (idProjeto != projeto.IdProjeto)
             {
                 return BadRequest();
             }
 
-            _context.Entry(projetoAtualizado).State = EntityState.Modified;
+            _context.Entry(projeto).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +60,7 @@ namespace labware_webapi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProjetoExists(id))
+                if (!ProjetoExists(idProjeto))
                 {
                     return NotFound();
                 }

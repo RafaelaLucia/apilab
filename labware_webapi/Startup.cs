@@ -73,7 +73,7 @@ namespace labware_webapi
                 options.AddPolicy("CorPolicy",
                 builder =>
                 {
-                builder.WithOrigins("*")
+                builder.WithOrigins("http://localhost:3000") //mudar dps pra estrela
                 .AllowAnyHeader()
                 .AllowAnyMethod();
                 });

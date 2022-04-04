@@ -16,13 +16,23 @@ namespace labware_webapi.Repositories
         LabWatchContext ctx = new LabWatchContext();
 
 
-        public Projeto Atualizar(Projeto projeto)
+        public void Atualizar(Projeto projetoAtualizado, int idProjeto)
         {
-            ctx.Entry(projeto).State = EntityState.Modified;
-            ctx.SaveChangesAsync();
-            return projeto;
+            Projeto projBuscado = ctx.Projetos.Find(idProjeto);
 
-        }          
+            if (projetoAtualizado.TituloProjeto != null)
+            {
+                projBuscado.IdEquipe = projetoAtualizado.IdEquipe;
+                projBuscado.IdStatusProjeto = projetoAtualizado.IdStatusProjeto;
+                projBuscado.TituloProjeto = projetoAtualizado.TituloProjeto;
+                projBuscado.DataInicio = projetoAtualizado.DataInicio;
+                projBuscado.DataConclusao = projetoAtualizado.DataConclusao;
+                projBuscado.nomeCliente = projetoAtualizado.nomeCliente;
+                projBuscado.fotoCliente = projetoAtualizado.fotoCliente;
+                ctx.Projetos.Update(projBuscado);
+                ctx.SaveChanges();
+            }
+        }
 
         public Projeto Buscar(int idProjeto)
         {
