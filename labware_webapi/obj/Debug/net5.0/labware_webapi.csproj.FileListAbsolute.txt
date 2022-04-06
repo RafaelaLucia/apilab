@@ -76,3 +76,4 @@ C:\Users\47499026833.INFOSCS\Desktop\apilab\labware_webapi\obj\Debug\net5.0\labw
 C:\Users\47499026833.INFOSCS\Desktop\apilab\labware_webapi\bin\Debug\net5.0\BCrypt.Net-Next.dll
 C:\Users\47499026833.INFOSCS\Desktop\apilab\labware_webapi\bin\Debug\net5.0\Perfil\1.png
 C:\Users\47499026833.INFOSCS\Desktop\apilab\labware_webapi\bin\Debug\net5.0\Perfil\3.png
+C:\Users\47499026833.INFOSCS\Desktop\apilab\labware_webapi\bin\Debug\net5.0\StaticFiles\Images\31280604-5fb9-4dba-9664-b15ca77ce2ac.png

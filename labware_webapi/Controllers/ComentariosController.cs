@@ -21,6 +21,19 @@ namespace labware_webapi.Controllers
             _repository = new ComentarioRepository();
         }
 
+        [HttpGet]
+        public IActionResult Listar()
+        {
+            try
+            {
+                return Ok(_repository.ListarTodos());
+            }
+            catch (Exception error)
+            {
+                return BadRequest(error.Message);
+            }
+        }
+
         [HttpPost]
         public IActionResult Cadastrar(Comentario c)
         {
@@ -33,19 +46,6 @@ namespace labware_webapi.Controllers
 
                 _repository.Cadastrar(c);
                 return StatusCode(201);
-            }
-            catch (Exception error)
-            {
-                return BadRequest(error.Message);
-            }
-        }
-
-        [HttpGet]
-        public IActionResult Listar()
-        {
-            try
-            {
-                return Ok(_repository.ListarTodos());
             }
             catch (Exception error)
             {

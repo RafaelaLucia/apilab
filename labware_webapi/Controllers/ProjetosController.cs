@@ -42,11 +42,11 @@ namespace labware_webapi.Controllers
 
 
         [HttpGet("{idProjeto}")]
-        public IActionResult BuscarPorId(int id)
+        public IActionResult BuscarPorId(int idProjeto)
         {
             try
             {
-                return Ok(_repository.Buscar(id));
+                return Ok(_repository.Buscar(idProjeto));
             }
             catch (Exception error)
             {
@@ -92,12 +92,12 @@ namespace labware_webapi.Controllers
             }
         }
 
-        [HttpDelete("{idTask}")]
-        public IActionResult Deletar(int id)
+        [HttpDelete("{idProjeto}")]
+        public IActionResult Deletar(int idProjeto)
         {
             try
             {
-                _repository.Deletar(id);
+                _repository.Deletar(idProjeto);
                 return StatusCode(204);
             }
             catch (Exception error)
@@ -108,7 +108,7 @@ namespace labware_webapi.Controllers
 
         }
 
-            [HttpPut]
+           /* [HttpPut]
             public IActionResult PutEquipamento([FromForm] Projeto projeto, IFormFile arquivo, int idProjeto)
             {
 
@@ -142,7 +142,7 @@ namespace labware_webapi.Controllers
                 }
 
 
-                }
+                }*/
 
         [HttpGet("Minhas/{idEquipe}")]
         public IActionResult GetMyOwn(int idEquipe)

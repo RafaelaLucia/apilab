@@ -35,7 +35,7 @@ namespace labware_webapi
         {
             services
              .AddControllers()
-             .AddNewtonsoftJson(options => {
+             .AddNewtonsoftJson(options => {    
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
              });
@@ -73,7 +73,7 @@ namespace labware_webapi
                 options.AddPolicy("CorPolicy",
                 builder =>
                 {
-                builder.WithOrigins("http://localhost:3000") //mudar dps pra estrela
+                builder.WithOrigins("*") //mudar dps pra estrela
                 .AllowAnyHeader()
                 .AllowAnyMethod();
                 });

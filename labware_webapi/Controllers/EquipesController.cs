@@ -38,11 +38,11 @@ namespace labware_webapi.Controllers
 
 
         [HttpGet("{idEquipe}")]
-        public IActionResult BuscarPorId(int id)
+        public IActionResult BuscarPorId(int idEquipe)
         {
             try
             {
-                return Ok(_repository.Buscar(id));
+                return Ok(_repository.Buscar(idEquipe));
             }
             catch (Exception error)
             {
@@ -75,11 +75,11 @@ namespace labware_webapi.Controllers
 
 
         [HttpPut("{idEquipe}")]
-        public IActionResult Atualizar(int id, Equipe equipe)
+        public IActionResult Atualizar(int idEquipe, Equipe equipe)
         {
             try
             {
-                _repository.AtualizarPeloId(id, equipe);
+                _repository.AtualizarPeloId(idEquipe, equipe);
                 return StatusCode(204);
             }
             catch (Exception error)
@@ -90,11 +90,11 @@ namespace labware_webapi.Controllers
 
 
         [HttpDelete("{idEquipe}")]
-        public IActionResult Deletar(int id)
+        public IActionResult Deletar(int idEquipe)
         {
             try
             {
-                _repository.Deletar(id);
+                _repository.Deletar(idEquipe);
                 return StatusCode(204);
             }
             catch (Exception error)
